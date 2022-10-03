@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\RidesController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +14,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::redirect('/', 'rides/create')
+	->name('home')
+	->breadcrumb('Home');
+
+Route::get('rides/create', [RidesController::class, 'create'])
+	->name('rides.create')
+	->breadcrumb('Request a Ride', 'home');
+
+Route::post('rides', [RidesController::class, 'store'])
+	->name('rides.store');
