@@ -24,3 +24,7 @@ Route::get('rides/create', [RidesController::class, 'create'])
 
 Route::post('rides', [RidesController::class, 'store'])
 	->name('rides.store');
+
+Route::get('rides/{ride}', [RidesController::class, 'show'])
+	->name('rides.show')
+	->breadcrumb('Your Ride', 'home');

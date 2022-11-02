@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Ride;
 use App\Support\RideCalculator;
+use Brick\Money\Money;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
@@ -38,12 +39,15 @@ class RidesController extends Controller
 			'cents' => $calculator->costByBus()->getMinorAmount()->toInt(),
 		]);
 		
-		dd($ride->toArray());
+		return redirect()->route('rides.show', $ride);
 	}
 	
 	public function show(Ride $ride)
 	{
-		//
+		return view('rides.show', [
+			'ride' => $ride,
+			'dollars' => Money::ofMinor($ride->cents, 'USD')->formatTo('en_US'),
+		]);
 	}
 	
 	public function edit(Ride $ride)
